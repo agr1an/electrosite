@@ -131,35 +131,34 @@
 
         /* ========== МОБИЛЬНАЯ ВЕРСИЯ ========== */
         @media (max-width: 768px) {
-            .burger-wrapper { display: none !important; }
-            .hero-logo-wrapper { max-width: 90%; margin: 0 auto; }
-
-            /* Галерея: одно фото на весь экран, без видимости соседних */
-            .gallery-carousel { margin: 30px 0; overflow: hidden; }
+            /* 1. Скрываем бургер */
+            .burger-wrapper {
+                display: none !important;
+            }
+            /* 2. Галерея: одно фото на весь экран, без соседних */
+            .gallery-carousel {
+                gap: 0;
+                margin: 30px 0;
+            }
             .gallery-scroll {
-                display: flex;
-                overflow-x: auto;
                 scroll-snap-type: x mandatory;
                 gap: 0;
                 padding: 0;
-                scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch;
             }
             .gallery-item {
                 flex: 0 0 100%;
-                width: 100%;
                 scroll-snap-align: start;
+                scroll-snap-stop: always;
                 margin: 0;
                 border-radius: 0;
-                background: transparent;
-                border: none;
             }
-            .carousel-arrow { display: none !important; }
-
-            /* Услуги: шрифт 0.85rem, карточки квадратные */
+            .carousel-arrow {
+                display: none !important;
+            }
+            /* 3. Услуги: уменьшаем карточки */
             .services-grid-2x2 {
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                gap: 8px;
             }
             .service-card {
                 aspect-ratio: 1 / 1;
@@ -168,37 +167,92 @@
                 justify-content: center;
                 align-items: center;
                 text-align: center;
-                padding: 8px 6px;
+                padding: 4px 6px;
             }
-            .service-card .emoji { font-size: 1.6rem; margin-bottom: 6px; }
-            .service-card h3 { font-size: 0.85rem; font-weight: 600; line-height: 1.3; word-break: keep-all; overflow-wrap: break-word; max-width: 100%; }
-
-            /* Преимущества — одна колонка */
-            .advantages-grid { grid-template-columns: 1fr !important; gap: 16px; }
-            .advantage-card { text-align: center; padding: 16px; margin: 0 auto; width: 100%; }
-
-            /* Центровка всего */
-            .header .container { flex-direction: column; align-items: center; gap: 12px; padding: 0 16px; }
-            .logo-absolute { position: static; transform: none; margin: 8px 0; }
-            .header-actions { width: 100%; justify-content: center; gap: 20px; margin-top: 5px; }
-            .theme-switch-fixed { display: none; }
-            .section-title { text-align: center; display: block; }
-            .about-card { text-align: center; }
-            .kontakt-details { align-items: center; }
-            .kontakt-detail { justify-content: center; }
-            .tg-channel a { margin: 0 auto; }
-            .content-container { padding: 0 16px; }
+            .service-card .emoji {
+                font-size: 1.5rem;
+                margin-bottom: 4px;
+            }
+            .service-card h3 {
+                font-size: 0.65rem;
+                font-weight: 600;
+                line-height: 1.3;
+                word-break: break-word;
+            }
+            /* 4. Преимущества — строго одна колонка */
+            .advantages-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px;
+            }
+            .advantage-card {
+                text-align: center;
+                padding: 16px;
+                margin: 0 auto;
+                width: 100%;
+            }
+            /* 5. Центровка всего */
+            .header .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                padding: 0 16px;
+            }
+            .logo-absolute {
+                position: static;
+                transform: none;
+                margin: 8px 0;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 5px;
+            }
+            .hero-logo-wrapper {
+                max-width: 85%;
+            }
+            .theme-switch-fixed {
+                display: none;
+            }
+            .section-title {
+                text-align: center;
+                display: block;
+            }
+            .about-card {
+                text-align: center;
+            }
+            .kontakt-details {
+                align-items: center;
+            }
+            .kontakt-detail {
+                justify-content: center;
+            }
+            .tg-channel a {
+                margin: 0 auto;
+            }
+            .content-container {
+                padding: 0 16px;
+            }
         }
 
         /* Десктоп (без изменений) */
         .header { background: var(--header-bg); backdrop-filter: blur(12px); padding: 16px 0; position: sticky; top: 0; z-index: 99; border-bottom: 1px solid var(--header-border); }
-        .header .container { display: flex; justify-content: space-between; align-items: center; position: relative; min-height: 70px; padding: 0 24px; margin: 0 auto; max-width: 100%; }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            min-height: 70px;
+            padding: 0 24px;
+            margin: 0 auto;
+            max-width: 100%;
+        }
         .burger-wrapper { flex-shrink: 0; margin-left: 0; }
         .header-actions { display: flex; gap: 15px; align-items: center; flex-shrink: 0; margin-right: 0; }
         .header-btn { background: var(--accent-gradient); color: var(--floating-btn-color); border: none; border-radius: 40px; padding: 8px 20px; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
         .header-phone { color: var(--accent); text-decoration: none; font-weight: 600; white-space: nowrap; }
 
-        /* Общие стили (десктоп) */
+        /* Общие стили (десктоп и мобильные не переопределённые) */
         .two-columns { display: flex; flex-wrap: wrap; gap: 40px; align-items: stretch; }
         .about-col { flex: 1.2; min-width: 280px; display: flex; }
         .about-card { background: var(--card-bg); padding: 30px; width: 100%; border-left: 4px solid var(--accent); transition: 0.2s; }
@@ -271,7 +325,9 @@
         .status-msg { margin-top: 14px; text-align: center; font-size: 0.85rem; }
         .floating-btn { position: fixed; bottom: 20px; right: 25px; background: var(--floating-btn-bg); color: var(--floating-btn-color); border: none; border-radius: 60px; padding: 12px 24px; font-size: 0.9rem; font-weight: bold; cursor: pointer; z-index: 1000; display: flex; align-items: center; gap: 8px; }
 
-        @media (max-width: 680px) { .about-card p { font-size: 1rem; } }
+        @media (max-width: 680px) {
+            .about-card p { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -312,8 +368,25 @@
 
     <section class="section">
         <div class="content-container two-columns">
-            <div class="about-col"><div class="about-card"><div class="about-icon">⚡🔧</div><h3>О нас</h3><p>Наш коллектив имеет многолетний опыт в построении инженерных сетей.</p><p>Трудимся над проектами любой сложности: от электрификации гаража до автоматизации производства.</p><p>Покрываем весь спектр услуг: проектирование, монтаж, написание ПО, пуско-наладочные работы, техническое обслуживание.</p></div></div>
-            <div class="advantages-col"><div class="advantages-grid"><div class="advantage-card"><div class="advantage-icon">✅</div><h3>Профессионализм и опыт</h3><p>Более 8 лет на рынке</p></div><div class="advantage-card"><div class="advantage-icon">🎯</div><h3>Индивидуальный подход</h3><p>Под решение ваших задач</p></div><div class="advantage-card"><div class="advantage-icon">🔒</div><h3>Гарантия безопасности</h3><p>Работаем по нормативам</p></div><div class="advantage-card"><div class="advantage-icon">⏱️</div><h3>Соблюдение сроков</h3><p>Сдаём вовремя</p></div><div class="advantage-card"><div class="advantage-icon">🛠️</div><h3>Современное оборудование</h3><p>Профессиональный инструмент и техника</p></div><div class="advantage-card"><div class="advantage-icon">🕒</div><h3>Круглосуточно на связи!</h3><p>Оперативная помощь в любое время</p></div></div></div>
+            <div class="about-col">
+                <div class="about-card">
+                    <div class="about-icon">⚡🔧</div>
+                    <h3>О нас</h3>
+                    <p>Наш коллектив имеет многолетний опыт в построении инженерных сетей.</p>
+                    <p>Трудимся над проектами любой сложности: от электрификации гаража до автоматизации производства.</p>
+                    <p>Покрываем весь спектр услуг: проектирование, монтаж, написание ПО, пуско-наладочные работы, техническое обслуживание.</p>
+                </div>
+            </div>
+            <div class="advantages-col">
+                <div class="advantages-grid">
+                    <div class="advantage-card"><div class="advantage-icon">✅</div><h3>Профессионализм и опыт</h3><p>Более 8 лет на рынке</p></div>
+                    <div class="advantage-card"><div class="advantage-icon">🎯</div><h3>Индивидуальный подход</h3><p>Под решение ваших задач</p></div>
+                    <div class="advantage-card"><div class="advantage-icon">🔒</div><h3>Гарантия безопасности</h3><p>Работаем по нормативам</p></div>
+                    <div class="advantage-card"><div class="advantage-icon">⏱️</div><h3>Соблюдение сроков</h3><p>Сдаём вовремя</p></div>
+                    <div class="advantage-card"><div class="advantage-icon">🛠️</div><h3>Современное оборудование</h3><p>Профессиональный инструмент и техника</p></div>
+                    <div class="advantage-card"><div class="advantage-icon">🕒</div><h3>Круглосуточно на связи!</h3><p>Оперативная помощь в любое время</p></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -338,7 +411,11 @@
     <section class="section" id="prices-block">
         <div class="content-container">
             <h2 class="section-title">Цены на услуги</h2>
-            <div class="prices-card"><p>Стоимость работ рассчитывается индивидуально в зависимости от объёма и сложности.</p><p>Оставьте заявку, и мы подготовим для вас смету в течение 30 минут.</p><div class="price-note">🎯 Бесплатная консультация!</div></div>
+            <div class="prices-card">
+                <p>Стоимость работ рассчитывается индивидуально в зависимости от объёма и сложности.</p>
+                <p>Оставьте заявку, и мы подготовим для вас смету в течение 30 минут.</p>
+                <div class="price-note">🎯 Бесплатная консультация!</div>
+            </div>
         </div>
     </section>
 
@@ -355,7 +432,10 @@
 
     <div id="lightbox" class="lightbox">
         <button class="close-lightbox" id="closeLightbox">&times;</button>
-        <div class="nav"><button id="prevPhoto">‹</button><button id="nextPhoto">›</button></div>
+        <div class="nav">
+            <button id="prevPhoto">‹</button>
+            <button id="nextPhoto">›</button>
+        </div>
         <img id="lightboxImg" src="" alt="">
         <div class="counter" id="photoCounter"></div>
     </div>
@@ -368,11 +448,18 @@
                 <div class="kontakt-detail"><span>✉️</span> EnSeSy@info.com</div>
                 <div class="kontakt-detail"><span>🕒</span> Ежедневно · 24/7</div>
             </div>
-            <div class="tg-channel"><a href="#" id="tgLink">📱 Наш Telegram канал</a></div>
+            <div class="tg-channel">
+                <a href="#" id="tgLink">📱 Наш Telegram канал</a>
+            </div>
         </div>
     </div>
 
-    <footer class="footer"><div class="container"><div class="footer-col">ИП Иванов Иван Иванович</div><div class="footer-col">Engineering Security System</div></div></footer>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-col">ИП Иванов Иван Иванович</div>
+            <div class="footer-col">Engineering Security System</div>
+        </div>
+    </footer>
 
     <button class="floating-btn" id="floatingOrderBtn">✉️ Написать</button>
 
@@ -395,20 +482,31 @@
         const BOT_TOKEN = '8678038757:AAEcqdfnjfNcnVFBKserfVaJdHO9HaaH7oY';
         const CHAT_ID = '6712645544';
 
+        // Тема (лампочка)
         const storedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const body = document.body;
         const themeToggleFixed = document.getElementById('themeToggleFixed');
 
         function applyTheme(isLight) {
-            if (isLight) { body.classList.add('light'); localStorage.setItem('theme', 'light'); }
-            else { body.classList.remove('light'); localStorage.setItem('theme', 'dark'); }
+            if (isLight) {
+                body.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+            }
         }
+
         if (storedTheme === 'light') applyTheme(true);
         else if (storedTheme === 'dark') applyTheme(false);
         else applyTheme(!systemPrefersDark);
-        themeToggleFixed.addEventListener('click', () => { applyTheme(!body.classList.contains('light')); });
 
+        themeToggleFixed.addEventListener('click', () => {
+            applyTheme(!body.classList.contains('light'));
+        });
+
+        // Бургер (десктоп)
         const burgerBtn = document.getElementById('burgerBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         if (burgerBtn && dropdownMenu) {
@@ -417,11 +515,15 @@
             document.addEventListener('click', (event) => { if (dropdownMenu.classList.contains('show') && !burgerBtn.contains(event.target) && !dropdownMenu.contains(event.target)) dropdownMenu.classList.remove('show'); });
         }
 
+        // Галерея
         const galleryScroll = document.getElementById('galleryScroll');
         const prevBtn = document.getElementById('carouselPrev');
         const nextBtn = document.getElementById('carouselNext');
         galleryScroll.innerHTML = '';
-        const imageUrls = ['images/1.jpeg','images/2.jpeg','images/3.jpeg','images/4.jpeg','images/5.jpeg','images/6.jpeg','images/7.jpeg'];
+        const imageUrls = [
+            'images/1.jpeg', 'images/2.jpeg', 'images/3.jpeg', 'images/4.jpeg',
+            'images/5.jpeg', 'images/6.jpeg', 'images/7.jpeg'
+        ];
         for (let i = 0; i < imageUrls.length; i++) {
             const item = document.createElement('div');
             item.className = 'gallery-item';
@@ -430,9 +532,11 @@
             img.alt = `Проект ${i+1}`;
             img.loading = 'lazy';
             item.appendChild(img);
+            item.addEventListener('click', () => openLightbox(i));
             galleryScroll.appendChild(item);
         }
 
+        // Лайтбокс
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         const prevPhotoBtn = document.getElementById('prevPhoto');
@@ -467,11 +571,7 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        galleryItems.forEach((item, idx) => {
-            item.addEventListener('click', () => openLightbox(idx));
-        });
-
+        // Стрелки карусели (десктоп)
         const updateArrows = () => {
             if (window.innerWidth > 768) {
                 let maxScroll = galleryScroll.scrollWidth - galleryScroll.clientWidth;
