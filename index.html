@@ -116,7 +116,7 @@
         .logo-img { height: 55px; width: auto; display: block; }
         body.light .logo-img { filter: brightness(0) invert(1); }
 
-        /* Герой: без подложки (увеличен картинка на мобильных) */
+        /* Герой: без подложки */
         .hero-logo-wrapper {
             max-width: 638px;
             margin: 0 auto;
@@ -131,24 +131,28 @@
 
         /* ========== МОБИЛЬНАЯ ВЕРСИЯ ========== */
         @media (max-width: 768px) {
-            /* 1. Скрываем бургер */
             .burger-wrapper {
                 display: none !important;
             }
-            /* 2. Увеличиваем логотип в герое */
             .hero-logo-wrapper {
                 max-width: 90%;
                 margin: 0 auto;
             }
-            /* 3. Галерея: одно фото на весь экран, без соседних */
+            /* Галерея: одно фото на весь экран, без видимости соседних */
             .gallery-carousel {
-                gap: 0;
-                margin: 30px 0;
+                overflow: hidden;
             }
             .gallery-scroll {
                 scroll-snap-type: x mandatory;
                 gap: 0;
                 padding: 0;
+                scroll-behavior: smooth;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+            }
+            .gallery-scroll::-webkit-scrollbar {
+                display: none;
             }
             .gallery-item {
                 flex: 0 0 100%;
@@ -156,11 +160,12 @@
                 scroll-snap-stop: always;
                 margin: 0;
                 border-radius: 0;
+                opacity: 1; /* все фото видны, но без зазоров */
             }
             .carousel-arrow {
                 display: none !important;
             }
-            /* 4. Услуги: исправляем перенос слов и размеры */
+            /* Услуги: шрифт 0.85rem */
             .services-grid-2x2 {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
@@ -179,14 +184,14 @@
                 margin-bottom: 6px;
             }
             .service-card h3 {
-                font-size: 0.75rem;
+                font-size: 0.85rem;
                 font-weight: 600;
                 line-height: 1.3;
-                word-break: keep-all;   /* чтобы не разрывать слова */
+                word-break: keep-all;
                 overflow-wrap: break-word;
                 max-width: 100%;
             }
-            /* 5. Преимущества — строго одна колонка */
+            /* Преимущества — строго одна колонка */
             .advantages-grid {
                 grid-template-columns: 1fr !important;
                 gap: 16px;
@@ -197,7 +202,7 @@
                 margin: 0 auto;
                 width: 100%;
             }
-            /* 6. Центровка всего */
+            /* Центровка */
             .header .container {
                 flex-direction: column;
                 align-items: center;
@@ -331,9 +336,6 @@
 
         @media (max-width: 680px) {
             .about-card p { font-size: 1rem; }
-            .service-card h3 {
-                font-size: 0.7rem;
-            }
         }
     </style>
 </head>
@@ -539,7 +541,6 @@
             img.alt = `Проект ${i+1}`;
             img.loading = 'lazy';
             item.appendChild(img);
-            item.addEventListener('click', () => openLightbox(i));
             galleryScroll.appendChild(item);
         }
 
@@ -589,11 +590,62 @@
                 nextBtn.classList.add('disabled');
             }
         };
-        galleryScroll.addEventListener('scroll', updateArrows);
-        window.addEventListener('resize', updateArrows);
+
+        // Привязываем открытие лайтбокса к активному фото (только для мобильных)
+        function bindLightboxToActive() {
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach((item, idx) => {
+                const newItem = item.cloneNode(true);
+                item.parentNode.replaceChild(newItem, item);
+                newItem.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        // на мобильных проверяем, активно ли фото (имеет класс active)
+                        if (newItem.classList.contains('active')) {
+                            openLightbox(idx);
+                        }
+                    } else {
+                        openLightbox(idx);
+                    }
+                });
+            });
+        }
+
+        // Функция обновления активного фото (для мобильных)
+        function updateActivePhoto() {
+            if (window.innerWidth <= 768) {
+                const container = galleryScroll;
+                const scrollLeft = container.scrollLeft;
+                const containerWidth = container.clientWidth;
+                const center = scrollLeft + containerWidth / 2;
+                let closestIndex = -1;
+                let minDistance = Infinity;
+                const items = document.querySelectorAll('.gallery-item');
+                items.forEach((item, index) => {
+                    const itemLeft = item.offsetLeft;
+                    const itemCenter = itemLeft + item.clientWidth / 2;
+                    const distance = Math.abs(itemCenter - center);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+                items.forEach((item, idx) => {
+                    if (idx === closestIndex) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            } else {
+                document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('active'));
+            }
+        }
+
+        galleryScroll.addEventListener('scroll', updateActivePhoto);
+        window.addEventListener('resize', updateActivePhoto);
+        updateActivePhoto();
+        bindLightboxToActive(); // перепривязываем клики
         updateArrows();
-        prevBtn.onclick = () => { if (!prevBtn.classList.contains('disabled')) galleryScroll.scrollBy({ left: -300, behavior: 'smooth' }); };
-        nextBtn.onclick = () => { if (!nextBtn.classList.contains('disabled')) galleryScroll.scrollBy({ left: 300, behavior: 'smooth' }); };
 
         const tgLink = document.getElementById('tgLink');
         tgLink.href = 'https://t.me/+xxxxxxxxxx';
