@@ -138,7 +138,7 @@
                 max-width: 90%;
                 margin: 0 auto;
             }
-            /* Галерея: затемнение соседних фото */
+            /* Галерея: одно фото на весь экран, без видимости соседних */
             .gallery-carousel {
                 overflow: hidden;
             }
@@ -149,6 +149,10 @@
                 scroll-behavior: smooth;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+            }
+            .gallery-scroll::-webkit-scrollbar {
+                display: none;
             }
             .gallery-item {
                 flex: 0 0 100%;
@@ -156,16 +160,12 @@
                 scroll-snap-stop: always;
                 margin: 0;
                 border-radius: 0;
-                transition: opacity 0.3s ease;
-                opacity: 0.4;  /* затемнение для неактивных */
-            }
-            .gallery-item.active {
-                opacity: 1;   /* яркое центральное фото */
+                opacity: 1; /* все фото видны, но без зазоров */
             }
             .carousel-arrow {
                 display: none !important;
             }
-            /* Услуги: увеличенный шрифт 1rem */
+            /* Услуги: шрифт 0.85rem */
             .services-grid-2x2 {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
@@ -184,7 +184,7 @@
                 margin-bottom: 6px;
             }
             .service-card h3 {
-                font-size: 1rem;
+                font-size: 0.85rem;
                 font-weight: 600;
                 line-height: 1.3;
                 word-break: keep-all;
@@ -591,7 +591,26 @@
             }
         };
 
-        // Мобильное затемнение: определяем активное фото по центру
+        // Привязываем открытие лайтбокса к активному фото (только для мобильных)
+        function bindLightboxToActive() {
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach((item, idx) => {
+                const newItem = item.cloneNode(true);
+                item.parentNode.replaceChild(newItem, item);
+                newItem.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        // на мобильных проверяем, активно ли фото (имеет класс active)
+                        if (newItem.classList.contains('active')) {
+                            openLightbox(idx);
+                        }
+                    } else {
+                        openLightbox(idx);
+                    }
+                });
+            });
+        }
+
+        // Функция обновления активного фото (для мобильных)
         function updateActivePhoto() {
             if (window.innerWidth <= 768) {
                 const container = galleryScroll;
@@ -600,7 +619,8 @@
                 const center = scrollLeft + containerWidth / 2;
                 let closestIndex = -1;
                 let minDistance = Infinity;
-                document.querySelectorAll('.gallery-item').forEach((item, index) => {
+                const items = document.querySelectorAll('.gallery-item');
+                items.forEach((item, index) => {
                     const itemLeft = item.offsetLeft;
                     const itemCenter = itemLeft + item.clientWidth / 2;
                     const distance = Math.abs(itemCenter - center);
@@ -609,7 +629,7 @@
                         closestIndex = index;
                     }
                 });
-                document.querySelectorAll('.gallery-item').forEach((item, idx) => {
+                items.forEach((item, idx) => {
                     if (idx === closestIndex) {
                         item.classList.add('active');
                     } else {
@@ -617,35 +637,15 @@
                     }
                 });
             } else {
-                // на десктопе убираем классы, чтобы не мешали
                 document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('active'));
             }
         }
 
         galleryScroll.addEventListener('scroll', updateActivePhoto);
-        window.addEventListener('resize', () => {
-            updateArrows();
-            updateActivePhoto();
-        });
-        galleryScroll.addEventListener('click', (e) => {
-            // клик по затемнённому фото не открывает лайтбокс, только по активному
-            if (e.target.closest('.gallery-item') && !e.target.closest('.gallery-item').classList.contains('active')) {
-                e.stopPropagation();
-                return;
-            }
-        });
-        // Переопределим открытие лайтбокса: привяжем клики к каждому фото отдельно
-        document.querySelectorAll('.gallery-item').forEach((item, idx) => {
-            item.removeEventListener('click', () => openLightbox(idx));
-            item.addEventListener('click', (e) => {
-                if (item.classList.contains('active')) {
-                    openLightbox(idx);
-                }
-            });
-        });
-
-        updateArrows();
+        window.addEventListener('resize', updateActivePhoto);
         updateActivePhoto();
+        bindLightboxToActive(); // перепривязываем клики
+        updateArrows();
 
         const tgLink = document.getElementById('tgLink');
         tgLink.href = 'https://t.me/+xxxxxxxxxx';
