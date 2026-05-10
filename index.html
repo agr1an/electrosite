@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ----- Базовые переменные ----- */
         :root {
             --bg-body: #0a0a0a;
             --text-primary: #e5e7eb;
@@ -55,6 +56,7 @@
             max-width: 1200px; margin: 0 auto; padding: 0 24px;
         }
 
+        /* Переключатель темы — лампочка (слева внизу) */
         .theme-switch-fixed {
             position: fixed; bottom: 20px; left: 20px; z-index: 1000;
             background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
@@ -66,14 +68,16 @@
         body.light .theme-icon { filter: drop-shadow(0 0 6px #facc15); text-shadow: 0 0 4px #facc15; }
         .header .theme-switch { display: none; }
 
+        /* Бургер (десктоп) */
         .burger-wrapper { position: relative; display: inline-block; }
         .burger { display: flex; flex-direction: column; cursor: pointer; gap: 5px; padding: 6px 4px; }
-        .burger span { width: 26px; height: 3px; background: var(--accent); border-radius: 4px; transition: 0.2s; }
+        .burger span { width: 26px; height: 3px; background: var(--accent); border-radius: 4px; }
         .dropdown-menu { position: absolute; top: 48px; left: 0; background: var(--card-bg); border: 1px solid var(--accent); border-radius: 16px; width: 240px; padding: 12px 0; display: none; flex-direction: column; z-index: 100; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-        .dropdown-menu a { color: var(--text-primary); text-decoration: none; padding: 10px 20px; font-weight: 500; transition: 0.2s; display: block; font-size: 1rem; }
+        .dropdown-menu a { color: var(--text-primary); text-decoration: none; padding: 10px 20px; font-weight: 500; display: block; font-size: 1rem; }
         .dropdown-menu a:hover { background: rgba(234,179,8,0.15); color: var(--accent); padding-left: 28px; }
         .dropdown-menu.show { display: flex; }
 
+        /* Логотип в шапке (абсолютное центрирование) */
         .logo-absolute {
             position: absolute;
             left: 50%; top: 50%;
@@ -83,6 +87,7 @@
         .logo-img { height: 55px; width: auto; display: block; }
         body.light .logo-img { filter: brightness(0) invert(1); }
 
+        /* Герой (большой логотип) */
         .hero-logo-wrapper { max-width: 638px; margin: 0 auto; background: transparent; padding: 0; }
         .hero-logo-wrapper img { width: 100%; height: auto; display: block; }
 
@@ -91,7 +96,7 @@
             .burger-wrapper { display: none !important; }
             .hero-logo-wrapper { max-width: 90%; margin: 0 auto; }
 
-            /* Галерея: ширина 85%, соседние затемнены, активная яркая */
+            /* ГАЛЕРЕЯ: ширина 85%, активная яркая, соседние затемнены, по центру */
             .gallery-carousel { margin: 30px 0; overflow: visible; }
             .gallery-scroll {
                 display: flex;
@@ -115,9 +120,7 @@
                 transition: opacity 0.3s ease;
                 opacity: 0.4;
             }
-            .gallery-item.active {
-                opacity: 1;
-            }
+            .gallery-item.active { opacity: 1; }
             .gallery-item img {
                 width: 100%;
                 height: auto;
@@ -127,10 +130,10 @@
             }
             .carousel-arrow { display: none !important; }
 
-            /* Услуги: шрифт 0.8rem */
+            /* ----- УСЛУГИ: УМЕНЬШЕННЫЙ КОМПАКТНЫЙ РАЗМЕР ----- */
             .services-grid-2x2 {
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                gap: 8px;              /* уменьшен промежуток */
             }
             .service-card {
                 aspect-ratio: 1 / 1;
@@ -139,16 +142,26 @@
                 justify-content: center;
                 align-items: center;
                 text-align: center;
-                padding: 8px 6px;
+                padding: 4px 4px;       /* уменьшены внутренние отступы */
             }
-            .service-card .emoji { font-size: 1.6rem; margin-bottom: 6px; }
-            .service-card h3 { font-size: 0.8rem; font-weight: 600; line-height: 1.3; word-break: keep-all; overflow-wrap: break-word; max-width: 100%; }
+            .service-card .emoji {
+                font-size: 1.2rem;      /* эмодзи поменьше */
+                margin-bottom: 4px;
+            }
+            .service-card h3 {
+                font-size: 0.7rem;      /* шрифт 0.7rem, но читаемый */
+                font-weight: 600;
+                line-height: 1.2;
+                word-break: keep-all;
+                overflow-wrap: break-word;
+                max-width: 100%;
+            }
 
-            /* Преимущества — одна колонка */
+            /* ПРЕИМУЩЕСТВА — одна колонка */
             .advantages-grid { grid-template-columns: 1fr !important; gap: 16px; }
             .advantage-card { text-align: center; padding: 16px; margin: 0 auto; width: 100%; }
 
-            /* Центровка всего */
+            /* ЦЕНТРОВКА ВСЕГО КОНТЕНТА */
             .header .container { flex-direction: column; align-items: center; gap: 12px; padding: 0 16px; }
             .logo-absolute { position: static; transform: none; margin: 8px 0; }
             .header-actions { width: 100%; justify-content: center; gap: 20px; margin-top: 5px; }
@@ -162,7 +175,7 @@
             .content-container { padding: 0 16px; }
         }
 
-        /* Десктоп (без изменений) */
+        /* ----- ДЕСКТОПНАЯ ВЕРСИЯ (не меняется) ----- */
         .header { background: var(--header-bg); backdrop-filter: blur(12px); padding: 16px 0; position: sticky; top: 0; z-index: 99; border-bottom: 1px solid var(--header-border); }
         .header .container { display: flex; justify-content: space-between; align-items: center; position: relative; min-height: 70px; padding: 0 24px; margin: 0 auto; max-width: 100%; }
         .burger-wrapper { flex-shrink: 0; margin-left: 0; }
@@ -206,6 +219,7 @@
         .carousel-arrow { background: var(--card-bg); border: 1px solid var(--accent); color: var(--accent); font-size: 2rem; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; }
 
+        /* Лайтбокс */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 90%; max-height: 80%; object-fit: contain; border-radius: 16px; }
@@ -215,6 +229,7 @@
         .lightbox .close-lightbox { position: absolute; top: 20px; right: 30px; font-size: 40px; color: white; cursor: pointer; background: none; border: none; }
         .lightbox .counter { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: white; font-size: 1rem; background: rgba(0,0,0,0.6); padding: 6px; width: fit-content; margin: 0 auto; border-radius: 40px; }
 
+        /* Контакты */
         .kontakt-simple { background: #000000; color: #eaeef2; padding: 3rem 0; border-top: 1px solid #222; border-bottom: 1px solid #222; }
         .kontakt-simple .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         .kontakt-simple h3 { font-size: 1.8rem; margin-bottom: 2rem; color: #facc15; text-align: center; }
