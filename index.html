@@ -34,9 +34,9 @@
             --heading-color: #5a3a1a;
             --accent: #f39c12;
             --accent-gradient: linear-gradient(135deg, #f39c12, #facc15);
-            --card-bg: #fffdf9;
-            --card-border: #f0e4d0;
-            --card-shadow: 0 6px 16px rgba(0,0,0,0.03);
+            --card-bg: #f5f5f5;        /* светлый фон карточек */
+            --card-border: #e0d5c0;
+            --card-shadow: 0 6px 16px rgba(0,0,0,0.05);
             --header-bg: #ffffff;
             --header-border: rgba(243,156,18,0.2);
             --footer-bg: #ffffff;
@@ -58,9 +58,13 @@
         /* Переключатель темы — лампочка (слева внизу) */
         .theme-switch-fixed {
             position: fixed; bottom: 20px; left: 20px; z-index: 1000;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
-            padding: 8px 12px; border-radius: 40px; display: flex; gap: 8px;
-            border: 1px solid var(--accent); cursor: pointer; transition: 0.2s;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            padding: 8px 12px; border-radius: 40px;
+            display: flex; gap: 8px;
+            border: 1px solid var(--accent);
+            cursor: pointer;
+            transition: 0.2s;
         }
         .theme-switch-fixed:hover { background: rgba(0,0,0,0.9); transform: scale(1.05); }
         .theme-icon { font-size: 1.5rem; display: inline-block; filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); }
@@ -76,7 +80,7 @@
         .dropdown-menu a:hover { background: rgba(234,179,8,0.15); color: var(--accent); padding-left: 28px; }
         .dropdown-menu.show { display: flex; }
 
-        /* Логотип в шапке (абсолютное центрирование) */
+        /* Логотип в шапке (абсолютное центрирование) — картинка меняется в скрипте */
         .logo-absolute {
             position: absolute;
             left: 50%; top: 50%;
@@ -84,8 +88,9 @@
             cursor: pointer; z-index: 101;
         }
         .logo-img { height: 55px; width: auto; display: block; }
-        /* Инверсия больше не нужна, так как меняем src */
-        
+        /* Принудительно убираем фильтр, так как будем переключать картинку */
+        body.light .logo-img { filter: none; }
+
         /* Герой (большой логотип) */
         .hero-logo-wrapper { max-width: 638px; margin: 0 auto; background: transparent; padding: 0; }
         .hero-logo-wrapper img { width: 100%; height: auto; display: block; }
@@ -95,7 +100,7 @@
             .burger-wrapper { display: none !important; }
             .hero-logo-wrapper { max-width: 90%; margin: 0 auto; }
 
-            /* ГАЛЕРЕЯ */
+            /* Галерея (с соседними затемнёнными) */
             .gallery-carousel { margin: 30px 0; overflow: visible; }
             .gallery-scroll {
                 display: flex;
@@ -129,24 +134,22 @@
             }
             .carousel-arrow { display: none !important; }
 
-            /* УСЛУГИ: компактные, две колонки, переносы слов */
+            /* Услуги — компактные, две колонки, аккуратные переносы */
             .services-grid-2x2 {
                 display: grid;
-                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                grid-template-columns: 1fr 1fr;
                 gap: 6px;
             }
             .service-card {
-                aspect-ratio: 1 / 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
                 padding: 4px 2px;
+                background: var(--card-bg);
+                border-left: 4px solid var(--accent);
+                border-radius: 8px;
             }
             .service-card .emoji {
                 font-size: 1rem;
                 margin-bottom: 4px;
+                display: block;
             }
             .service-card h3 {
                 font-size: 0.65rem;
@@ -158,11 +161,11 @@
                 max-width: 100%;
             }
 
-            /* ПРЕИМУЩЕСТВА — одна колонка */
+            /* Преимущества — одна колонка */
             .advantages-grid { grid-template-columns: 1fr !important; gap: 16px; }
             .advantage-card { text-align: center; padding: 16px; margin: 0 auto; width: 100%; }
 
-            /* ЦЕНТРОВКА ВСЕГО КОНТЕНТА */
+            /* Центровка всего */
             .header .container { flex-direction: column; align-items: center; gap: 12px; padding: 0 16px; }
             .logo-absolute { position: static; transform: none; margin: 8px 0; }
             .header-actions { width: 100%; justify-content: center; gap: 20px; margin-top: 5px; }
@@ -176,7 +179,7 @@
             .content-container { padding: 0 16px; }
         }
 
-        /* ----- ДЕСКТОПНАЯ ВЕРСИЯ ----- */
+        /* ----- ДЕСКТОПНАЯ ВЕРСИЯ (минимальные корректировки фона) ----- */
         .header { background: var(--header-bg); backdrop-filter: blur(12px); padding: 16px 0; position: sticky; top: 0; z-index: 99; border-bottom: 1px solid var(--header-border); }
         .header .container { display: flex; justify-content: space-between; align-items: center; position: relative; min-height: 70px; padding: 0 24px; margin: 0 auto; max-width: 100%; }
         .burger-wrapper { flex-shrink: 0; margin-left: 0; }
@@ -184,6 +187,7 @@
         .header-btn { background: var(--accent-gradient); color: var(--floating-btn-color); border: none; border-radius: 40px; padding: 8px 20px; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
         .header-phone { color: var(--accent); text-decoration: none; font-weight: 600; white-space: nowrap; }
 
+        /* Общие стили для карточек — фон берётся из переменной */
         .two-columns { display: flex; flex-wrap: wrap; gap: 40px; align-items: stretch; }
         .about-col { flex: 1.2; min-width: 280px; display: flex; }
         .about-card { background: var(--card-bg); padding: 30px; width: 100%; border-left: 4px solid var(--accent); transition: 0.2s; }
@@ -210,6 +214,7 @@
         .prices-card p { font-size: 1rem; margin-bottom: 12px; color: var(--text-secondary); }
         .prices-card .price-note { font-size: 1.2rem; font-weight: 600; color: var(--accent); margin-top: 10px; display: inline-block; background: rgba(234,179,8,0.15); padding: 6px 20px; border-radius: 40px; }
 
+        /* Галерея (десктоп) */
         .gallery-carousel { position: relative; display: flex; align-items: center; gap: 15px; margin: 30px 0; }
         .gallery-scroll { display: flex; overflow-x: auto; gap: 20px; scroll-behavior: smooth; scrollbar-width: none; flex: 1; }
         .gallery-scroll::-webkit-scrollbar { display: none; }
@@ -219,6 +224,7 @@
         .carousel-arrow { background: var(--card-bg); border: 1px solid var(--accent); color: var(--accent); font-size: 2rem; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; }
 
+        /* Лайтбокс */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 90%; max-height: 80%; object-fit: contain; border-radius: 16px; }
@@ -228,6 +234,7 @@
         .lightbox .close-lightbox { position: absolute; top: 20px; right: 30px; font-size: 40px; color: white; cursor: pointer; background: none; border: none; }
         .lightbox .counter { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: white; font-size: 1rem; background: rgba(0,0,0,0.6); padding: 6px; width: fit-content; margin: 0 auto; border-radius: 40px; }
 
+        /* Контакты */
         .kontakt-simple { background: #000000; color: #eaeef2; padding: 3rem 0; border-top: 1px solid #222; border-bottom: 1px solid #222; }
         .kontakt-simple .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         .kontakt-simple h3 { font-size: 1.8rem; margin-bottom: 2rem; color: #facc15; text-align: center; }
@@ -242,6 +249,7 @@
         .footer .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
         .footer-col { flex: 1; font-size: 0.85rem; color: var(--footer-text); text-align: center; }
 
+        /* Модальное окно заявки */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1100; }
         .modal-content { background: var(--card-bg); max-width: 460px; width: 90%; padding: 30px 24px; position: relative; border: 1px solid var(--accent); border-radius: 24px; }
         .close-modal { position: absolute; top: 16px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-secondary); }
@@ -270,8 +278,9 @@
                     <a href="#contacts-block">📞 Контакты</a>
                 </div>
             </div>
+            <!-- Логотип в шапке: картинка будет меняться скриптом -->
             <div class="logo-absolute" id="logoClick">
-                <img src="images/logoup.png" alt="Logo" class="logo-img" id="logoImg" onerror="this.style.display='none'">
+                <img src="images/logoup.png" alt="Logo" class="logo-img" id="headerLogo">
             </div>
             <div class="header-actions">
                 <button class="header-btn" id="writeBtn">📝 Написать</button>
@@ -292,7 +301,6 @@
         </div>
     </section>
 
-    <!-- Остальное содержимое без изменений -->
     <section class="section">
         <div class="content-container two-columns">
             <div class="about-col"><div class="about-card"><div class="about-icon">⚡🔧</div><h3>О нас</h3><p>Наш коллектив имеет многолетний опыт в построении инженерных сетей.</p><p>Трудимся над проектами любой сложности: от электрификации гаража до автоматизации производства.</p><p>Покрываем весь спектр услуг: проектирование, монтаж, написание ПО, пуско-наладочные работы, техническое обслуживание.</p></div></div>
@@ -375,24 +383,28 @@
     </div>
 
     <script>
+        // Telegram
         const BOT_TOKEN = '8678038757:AAEcqdfnjfNcnVFBKserfVaJdHO9HaaH7oY';
         const CHAT_ID = '6712645544';
 
+        // Тема (лампочка) + переключение логотипа в шапке
         const storedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const body = document.body;
         const themeToggleFixed = document.getElementById('themeToggleFixed');
-        const logoImg = document.getElementById('logoImg');
+        const headerLogo = document.getElementById('headerLogo');
 
         function applyTheme(isLight) {
             if (isLight) {
                 body.classList.add('light');
                 localStorage.setItem('theme', 'light');
-                if (logoImg) logoImg.src = 'images/logoupwhite.png';
+                // меняем логотип в шапке на светлую версию
+                if (headerLogo) headerLogo.src = 'images/logoupwhite.png';
             } else {
                 body.classList.remove('light');
                 localStorage.setItem('theme', 'dark');
-                if (logoImg) logoImg.src = 'images/logoup.png';
+                // меняем логотип в шапке на тёмную версию
+                if (headerLogo) headerLogo.src = 'images/logoup.png';
             }
         }
 
@@ -404,7 +416,7 @@
             applyTheme(!body.classList.contains('light'));
         });
 
-        // Бургер
+        // Бургер (десктоп)
         const burgerBtn = document.getElementById('burgerBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         if (burgerBtn && dropdownMenu) {
