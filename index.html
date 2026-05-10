@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ----- Базовые переменные ----- */
         :root {
             --bg-body: #0a0a0a;
             --text-primary: #e5e7eb;
@@ -85,8 +84,8 @@
             cursor: pointer; z-index: 101;
         }
         .logo-img { height: 55px; width: auto; display: block; }
-        body.light .logo-img { filter: brightness(0) invert(1); }
-
+        /* Инверсия больше не нужна, так как меняем src */
+        
         /* Герой (большой логотип) */
         .hero-logo-wrapper { max-width: 638px; margin: 0 auto; background: transparent; padding: 0; }
         .hero-logo-wrapper img { width: 100%; height: auto; display: block; }
@@ -96,7 +95,7 @@
             .burger-wrapper { display: none !important; }
             .hero-logo-wrapper { max-width: 90%; margin: 0 auto; }
 
-            /* ГАЛЕРЕЯ (уже настроена) */
+            /* ГАЛЕРЕЯ */
             .gallery-carousel { margin: 30px 0; overflow: visible; }
             .gallery-scroll {
                 display: flex;
@@ -130,37 +129,34 @@
             }
             .carousel-arrow { display: none !important; }
 
-            /* ----- УСЛУГИ: КОМПАКТНЫЙ РАЗМЕР ----- */
+            /* УСЛУГИ: компактные, две колонки, переносы слов */
             .services-grid-2x2 {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 6px;
-    margin: 0 auto;
-    width: 100%;
-}
-.service-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 6px 4px;
-    background: var(--card-bg);
-    border-left: 4px solid var(--accent);
-    border-radius: 8px;
-}
-.service-card .emoji {
-    font-size: 1.2rem;
-    margin-bottom: 4px;
-}
-.service-card h3 {
-    font-size: 0.55rem;
-    font-weight: 600;
-    line-height: 1.2;
-    hyphens: auto;
-    word-break: normal;
-    max-width: 100%;
-}
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                gap: 6px;
+            }
+            .service-card {
+                aspect-ratio: 1 / 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 4px 2px;
+            }
+            .service-card .emoji {
+                font-size: 1rem;
+                margin-bottom: 4px;
+            }
+            .service-card h3 {
+                font-size: 0.65rem;
+                font-weight: 600;
+                line-height: 1.3;
+                word-break: normal;
+                overflow-wrap: break-word;
+                hyphens: auto;
+                max-width: 100%;
+            }
 
             /* ПРЕИМУЩЕСТВА — одна колонка */
             .advantages-grid { grid-template-columns: 1fr !important; gap: 16px; }
@@ -180,7 +176,7 @@
             .content-container { padding: 0 16px; }
         }
 
-        /* ----- ДЕСКТОПНАЯ ВЕРСИЯ (не трогаем) ----- */
+        /* ----- ДЕСКТОПНАЯ ВЕРСИЯ ----- */
         .header { background: var(--header-bg); backdrop-filter: blur(12px); padding: 16px 0; position: sticky; top: 0; z-index: 99; border-bottom: 1px solid var(--header-border); }
         .header .container { display: flex; justify-content: space-between; align-items: center; position: relative; min-height: 70px; padding: 0 24px; margin: 0 auto; max-width: 100%; }
         .burger-wrapper { flex-shrink: 0; margin-left: 0; }
@@ -223,7 +219,6 @@
         .carousel-arrow { background: var(--card-bg); border: 1px solid var(--accent); color: var(--accent); font-size: 2rem; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; }
 
-        /* Лайтбокс */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 90%; max-height: 80%; object-fit: contain; border-radius: 16px; }
@@ -233,7 +228,6 @@
         .lightbox .close-lightbox { position: absolute; top: 20px; right: 30px; font-size: 40px; color: white; cursor: pointer; background: none; border: none; }
         .lightbox .counter { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: white; font-size: 1rem; background: rgba(0,0,0,0.6); padding: 6px; width: fit-content; margin: 0 auto; border-radius: 40px; }
 
-        /* Контакты */
         .kontakt-simple { background: #000000; color: #eaeef2; padding: 3rem 0; border-top: 1px solid #222; border-bottom: 1px solid #222; }
         .kontakt-simple .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         .kontakt-simple h3 { font-size: 1.8rem; margin-bottom: 2rem; color: #facc15; text-align: center; }
@@ -248,7 +242,7 @@
         .footer .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
         .footer-col { flex: 1; font-size: 0.85rem; color: var(--footer-text); text-align: center; }
 
-        .modal { /* стили модалки */ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1100; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1100; }
         .modal-content { background: var(--card-bg); max-width: 460px; width: 90%; padding: 30px 24px; position: relative; border: 1px solid var(--accent); border-radius: 24px; }
         .close-modal { position: absolute; top: 16px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-secondary); }
         .form-group { margin-bottom: 18px; }
@@ -277,7 +271,7 @@
                 </div>
             </div>
             <div class="logo-absolute" id="logoClick">
-                <img src="images/logoup.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+                <img src="images/logoup.png" alt="Logo" class="logo-img" id="logoImg" onerror="this.style.display='none'">
             </div>
             <div class="header-actions">
                 <button class="header-btn" id="writeBtn">📝 Написать</button>
@@ -298,6 +292,7 @@
         </div>
     </section>
 
+    <!-- Остальное содержимое без изменений -->
     <section class="section">
         <div class="content-container two-columns">
             <div class="about-col"><div class="about-card"><div class="about-icon">⚡🔧</div><h3>О нас</h3><p>Наш коллектив имеет многолетний опыт в построении инженерных сетей.</p><p>Трудимся над проектами любой сложности: от электрификации гаража до автоматизации производства.</p><p>Покрываем весь спектр услуг: проектирование, монтаж, написание ПО, пуско-наладочные работы, техническое обслуживание.</p></div></div>
@@ -317,8 +312,8 @@
                 <div class="service-card"><div class="emoji">🚨</div><h3>Тревожная сигнализация</h3></div>
                 <div class="service-card"><div class="emoji">🔒</div><h3>Охранная сигнализация</h3></div>
                 <div class="service-card"><div class="emoji">📡</div><h3>Структурированные кабельные сети</h3></div>
-                <div class="service-card"><div class="emoji">🔐</div><h3>Система контроля и управления доступом</h3></div>
                 <div class="service-card"><div class="emoji">📹</div><h3>Видеонаблюдение</h3></div>
+                <div class="service-card"><div class="emoji">🔐</div><h3>Система контроля и управления доступом</h3></div>
             </div>
         </div>
     </section>
@@ -326,7 +321,7 @@
     <section class="section" id="prices-block">
         <div class="content-container">
             <h2 class="section-title">Цены на услуги</h2>
-            <div class="prices-card"><p>Стоимость работ рассчитывается индивидуально в зависимости от объёма и сложности.</p><p>Оставьте заявку, и мы сформируем для Вас предложение в кратчайшие сроки.</p><div class="price-note">🎯 Бесплатная консультация!</div></div>
+            <div class="prices-card"><p>Стоимость работ рассчитывается индивидуально в зависимости от объёма и сложности.</p><p>Оставьте заявку, и мы подготовим для вас смету в течение 30 минут.</p><div class="price-note">🎯 Бесплатная консультация!</div></div>
         </div>
     </section>
 
@@ -360,9 +355,9 @@
         </div>
     </div>
 
-    <footer class="footer"><div class="container"><div class="footer-col">Engineering Security System</div></div></footer>
+    <footer class="footer"><div class="container"><div class="footer-col">ИП Иванов Иван Иванович</div><div class="footer-col">Engineering Security System</div></div></footer>
 
-    <button class="floating-btn" id="floatingOrderBtn">📝 Написать</button>
+    <button class="floating-btn" id="floatingOrderBtn">✉️ Написать</button>
 
     <div id="requestModal" class="modal">
         <div class="modal-content">
@@ -380,22 +375,36 @@
     </div>
 
     <script>
-        // (скрипты оставлены без изменений, всё работает)
         const BOT_TOKEN = '8678038757:AAEcqdfnjfNcnVFBKserfVaJdHO9HaaH7oY';
         const CHAT_ID = '6712645544';
+
         const storedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const body = document.body;
         const themeToggleFixed = document.getElementById('themeToggleFixed');
+        const logoImg = document.getElementById('logoImg');
+
         function applyTheme(isLight) {
-            if (isLight) { body.classList.add('light'); localStorage.setItem('theme', 'light'); }
-            else { body.classList.remove('light'); localStorage.setItem('theme', 'dark'); }
+            if (isLight) {
+                body.classList.add('light');
+                localStorage.setItem('theme', 'light');
+                if (logoImg) logoImg.src = 'images/logoupwhite.png';
+            } else {
+                body.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+                if (logoImg) logoImg.src = 'images/logoup.png';
+            }
         }
+
         if (storedTheme === 'light') applyTheme(true);
         else if (storedTheme === 'dark') applyTheme(false);
         else applyTheme(!systemPrefersDark);
-        themeToggleFixed.addEventListener('click', () => { applyTheme(!body.classList.contains('light')); });
 
+        themeToggleFixed.addEventListener('click', () => {
+            applyTheme(!body.classList.contains('light'));
+        });
+
+        // Бургер
         const burgerBtn = document.getElementById('burgerBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         if (burgerBtn && dropdownMenu) {
@@ -404,6 +413,7 @@
             document.addEventListener('click', (event) => { if (dropdownMenu.classList.contains('show') && !burgerBtn.contains(event.target) && !dropdownMenu.contains(event.target)) dropdownMenu.classList.remove('show'); });
         }
 
+        // Галерея
         const galleryScroll = document.getElementById('galleryScroll');
         const prevBtn = document.getElementById('carouselPrev');
         const nextBtn = document.getElementById('carouselNext');
