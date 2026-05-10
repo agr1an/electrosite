@@ -132,30 +132,34 @@
 
             /* ----- УСЛУГИ: КОМПАКТНЫЙ РАЗМЕР ----- */
             .services-grid-2x2 {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;               /* уменьшен промежуток */
-            }
-            .service-card {
-                aspect-ratio: 1 / 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                padding: 4px 4px;       /* маленькие отступы */
-            }
-            .service-card .emoji {
-                font-size: 1.2rem;      /* эмодзи поменьше */
-                margin-bottom: 4px;
-            }
-            .service-card h3 {
-                font-size: 0.7rem;      /* читаемый, но компактный */
-                font-weight: 600;
-                line-height: 1.2;
-                word-break: keep-all;
-                overflow-wrap: break-word;
-                max-width: 100%;
-            }
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+    margin: 0 auto;
+    width: 100%;
+}
+.service-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6px 4px;
+    background: var(--card-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+}
+.service-card .emoji {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+.service-card h3 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.2;
+    word-break: break-word;
+    max-width: 100%;
+}
 
             /* ПРЕИМУЩЕСТВА — одна колонка */
             .advantages-grid { grid-template-columns: 1fr !important; gap: 16px; }
