@@ -160,14 +160,13 @@
                 display: block;
             }
             .service-card h3 {
-                font-size: 0.65rem;
-                font-weight: 600;
-                line-height: 1.3;
-                word-break: normal;
-                overflow-wrap: break-word;
-                hyphens: auto;
-                max-width: 100%;
-            }
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1.3;
+    word-break: normal;
+    overflow-wrap: break-word;  /* при необходимости разрывает очень длинные слова, но сначала пробует перенести целиком */
+    max-width: 100%;
+}
 
             /* Преимущества — одна колонка */
             .advantages-grid { grid-template-columns: 1fr !important; gap: 16px; }
