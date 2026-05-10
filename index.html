@@ -50,13 +50,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
         body { font-family: 'DM Sans', sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.5; overflow-x: hidden; }
         
-        /* Контейнер для контента (с отступами по бокам, но не для шапки) */
         .content-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
-        /* Для секций, кроме шапки, используем общий класс */
         .section .container,
         .hero .container,
         .kontakt-simple .container,
@@ -66,7 +64,7 @@
             padding: 0 24px;
         }
 
-        /* Переключатель темы — лампочка слева внизу */
+        /* Переключатель темы — лампочка */
         .theme-switch-fixed {
             position: fixed;
             bottom: 20px;
@@ -91,18 +89,13 @@
             display: inline-block;
             filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
         }
-        /* Для светлой темы добавим эффект свечения */
         body.light .theme-icon {
             filter: drop-shadow(0 0 6px #facc15);
             text-shadow: 0 0 4px #facc15;
         }
+        .header .theme-switch { display: none; }
 
-        /* Старый переключатель в шапке скрыт */
-        .header .theme-switch {
-            display: none;
-        }
-
-        /* Бургер */
+        /* Бургер (десктоп) */
         .burger-wrapper { position: relative; display: inline-block; }
         .burger { display: flex; flex-direction: column; cursor: pointer; gap: 5px; padding: 6px 4px; }
         .burger span { width: 26px; height: 3px; background: var(--accent); border-radius: 4px; transition: 0.2s; }
@@ -136,22 +129,111 @@
             display: block;
         }
 
-        /* Мобильная адаптация: на телефонах убираем абсолютное позиционирование логотипа и прижимаем всё по центру */
+        /* ========== МОБИЛЬНАЯ ВЕРСИЯ (только изменения) ========== */
         @media (max-width: 768px) {
-            .header .container { flex-direction: column; align-items: center; gap: 12px; position: relative; padding: 0 16px; }
-            .burger-wrapper { margin-right: 0; margin-left: 0; }
+            /* 1. Скрываем бургер */
+            .burger-wrapper {
+                display: none !important;
+            }
+            /* 2. Галерея: одна картинка на экране, без частей соседних */
+            .gallery-scroll {
+                scroll-snap-type: x mandatory;
+                gap: 0;
+            }
+            .gallery-item {
+                flex: 0 0 calc(100% - 30px);
+                scroll-snap-align: start;
+                margin-right: 15px;
+                margin-left: 15px;
+            }
+            .gallery-item:first-child {
+                margin-left: 15px;
+            }
+            .gallery-item:last-child {
+                margin-right: 15px;
+            }
+            .carousel-arrow {
+                display: none; /* стрелки на мобильных не нужны, листаем пальцем */
+            }
+            /* 3. Квадратные карточки услуг */
+            .services-grid-2x2 {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .service-card {
+                aspect-ratio: 1 / 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 12px;
+            }
+            .service-card .emoji {
+                font-size: 2rem;
+                margin-bottom: 8px;
+            }
+            .service-card h3 {
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+            /* 4. Центровка всего */
+            .header .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                padding: 0 16px;
+            }
             .logo-absolute {
                 position: static;
                 transform: none;
                 margin: 8px 0;
             }
-            .header-actions { width: 100%; justify-content: center; gap: 20px; margin-top: 5px; margin-right: 0; }
-            .hero-logo-wrapper { max-width: 85%; }
-            .theme-switch-fixed { display: none; } /* на телефонах скрываем, т.к. тема и так подстраивается под систему, но можно оставить — решайте сами */
-            .header .theme-switch { display: none; } /* уже скрыт */
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 5px;
+            }
+            .hero-logo-wrapper {
+                max-width: 85%;
+            }
+            .theme-switch-fixed {
+                display: none; /* на телефонах скрываем (тема подстраивается под систему) */
+            }
+            /* Центровка контента */
+            .section-title {
+                text-align: center;
+                display: block;
+            }
+            .about-card p {
+                text-align: center;
+            }
+            .advantage-card {
+                text-align: center;
+            }
+            .advantages-grid {
+                justify-items: center;
+            }
+            .kontakt-details {
+                align-items: center;
+            }
+            .kontakt-detail {
+                justify-content: center;
+            }
+            .tg-channel a {
+                margin: 0 auto;
+            }
+            /* Убираем лишние отступы */
+            .content-container {
+                padding: 0 16px;
+            }
+            .services-grid-2x2 {
+                margin: 0 auto;
+            }
         }
 
-        /* Шапка: контейнер с отступами 24px слева и справа (увеличенные отступы) */
+        /* Десктопная версия (без изменений) */
         .header { background: var(--header-bg); backdrop-filter: blur(12px); padding: 16px 0; position: sticky; top: 0; z-index: 99; border-bottom: 1px solid var(--header-border); }
         .header .container {
             display: flex;
@@ -159,7 +241,7 @@
             align-items: center;
             position: relative;
             min-height: 70px;
-            padding: 0 24px; /* увеличенные отступы */
+            padding: 0 24px;
             margin: 0 auto;
             max-width: 100%;
         }
@@ -168,7 +250,7 @@
         .header-btn { background: var(--accent-gradient); color: var(--floating-btn-color); border: none; border-radius: 40px; padding: 8px 20px; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
         .header-phone { color: var(--accent); text-decoration: none; font-weight: 600; white-space: nowrap; }
 
-        /* Основные секции (с отступами) */
+        /* Остальные стили (без изменений) */
         .two-columns { display: flex; flex-wrap: wrap; gap: 40px; align-items: stretch; }
         .about-col { flex: 1.2; min-width: 280px; display: flex; }
         .about-card { background: var(--card-bg); padding: 30px; width: 100%; border-left: 4px solid var(--accent); transition: 0.2s; }
@@ -195,7 +277,7 @@
         .prices-card p { font-size: 1rem; margin-bottom: 12px; color: var(--text-secondary); }
         .prices-card .price-note { font-size: 1.2rem; font-weight: 600; color: var(--accent); margin-top: 10px; display: inline-block; background: rgba(234,179,8,0.15); padding: 6px 20px; border-radius: 40px; }
 
-        /* Галерея */
+        /* Галерея (десктоп) */
         .gallery-carousel { position: relative; display: flex; align-items: center; gap: 15px; margin: 30px 0; }
         .gallery-scroll { display: flex; overflow-x: auto; gap: 20px; scroll-behavior: smooth; scrollbar-width: none; flex: 1; }
         .gallery-scroll::-webkit-scrollbar { display: none; }
@@ -205,7 +287,7 @@
         .carousel-arrow { background: var(--card-bg); border: 1px solid var(--accent); color: var(--accent); font-size: 2rem; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .carousel-arrow.disabled { opacity: 0.3; cursor: not-allowed; }
 
-        /* Лайтбокс */
+        /* Лайтбокс (без изменений) */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 90%; max-height: 80%; object-fit: contain; border-radius: 16px; }
@@ -243,10 +325,6 @@
 
         @media (max-width: 680px) {
             .advantages-grid { grid-template-columns: 1fr; gap: 20px; }
-            .gallery-item { flex: 0 0 220px; }
-            .gallery-item img { height: 180px; }
-            .lightbox .nav button { width: 40px; height: 40px; font-size: 1.5rem; }
-            .kontakt-detail { font-size: 0.95rem; }
             .about-card p { font-size: 1rem; }
         }
     </style>
@@ -265,7 +343,6 @@
                     <a href="#contacts-block">📞 Контакты</a>
                 </div>
             </div>
-            <!-- Логотип по центру экрана (абсолютно) -->
             <div class="logo-absolute" id="logoClick">
                 <img src="images/logoup.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
             </div>
@@ -276,7 +353,6 @@
         </div>
     </header>
 
-    <!-- Переключатель темы — лампочка слева внизу -->
     <div class="theme-switch-fixed" id="themeToggleFixed">
         <span class="theme-icon" id="themeIcon">💡</span>
     </div>
@@ -319,14 +395,14 @@
             <div class="services-grid-2x2">
                 <div class="service-card"><div class="emoji">🔌</div><h3>Электромонтаж</h3></div>
                 <div class="service-card"><div class="emoji">🔧</div><h3>Сборка шкафов</h3></div>
-                <div class="service-card"><div class="emoji">⚙️</div><h3>Автоматизация производств</h3></div>
+                <div class="service-card"><div class="emoji">⚙️</div><h3>Автоматизация производства</h3></div>
                 <div class="service-card"><div class="emoji">🔥</div><h3>Пожарная сигнализация</h3></div>
-                <div class="service-card"><div class="emoji">📢</div><h3>СОУЭ</h3></div>
+                <div class="service-card"><div class="emoji">📢</div><h3>Система оповещения и управления эвакуацией</h3></div>
                 <div class="service-card"><div class="emoji">🚨</div><h3>Тревожная сигнализация</h3></div>
                 <div class="service-card"><div class="emoji">🔒</div><h3>Охранная сигнализация</h3></div>
-                <div class="service-card"><div class="emoji">📡</div><h3>СКС</h3></div>
+                <div class="service-card"><div class="emoji">📡</div><h3>Структурированные кабельные сети</h3></div>
                 <div class="service-card"><div class="emoji">📹</div><h3>Видеонаблюдение</h3></div>
-                <div class="service-card"><div class="emoji">🔐</div><h3>СКУД</h3></div>
+                <div class="service-card"><div class="emoji">🔐</div><h3>Система контроля и управления доступом</h3></div>
             </div>
         </div>
     </section>
@@ -402,11 +478,10 @@
     </div>
 
     <script>
-        // Telegram
         const BOT_TOKEN = '8678038757:AAEcqdfnjfNcnVFBKserfVaJdHO9HaaH7oY';
         const CHAT_ID = '6712645544';
 
-        // Тема (переключатель внизу — лампочка)
+        // Тема (лампочка)
         const storedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const body = document.body;
@@ -430,7 +505,7 @@
             applyTheme(!body.classList.contains('light'));
         });
 
-        // Бургер
+        // Бургер (десктоп)
         const burgerBtn = document.getElementById('burgerBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         if (burgerBtn && dropdownMenu) {
@@ -439,7 +514,7 @@
             document.addEventListener('click', (event) => { if (dropdownMenu.classList.contains('show') && !burgerBtn.contains(event.target) && !dropdownMenu.contains(event.target)) dropdownMenu.classList.remove('show'); });
         }
 
-        // Галерея (7 фото)
+        // Галерея (7 фото) — инициализация
         const galleryScroll = document.getElementById('galleryScroll');
         const prevBtn = document.getElementById('carouselPrev');
         const nextBtn = document.getElementById('carouselNext');
@@ -495,18 +570,27 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // Стрелки карусели
-        const updateArrows = () => { let maxScroll = galleryScroll.scrollWidth - galleryScroll.clientWidth; prevBtn.classList.toggle('disabled', galleryScroll.scrollLeft <= 1); nextBtn.classList.toggle('disabled', Math.abs(galleryScroll.scrollLeft - maxScroll) <= 1); };
-        galleryScroll.addEventListener('scroll', updateArrows); window.addEventListener('resize', updateArrows); updateArrows();
+        // Стрелки карусели (для десктопа)
+        const updateArrows = () => {
+            if (window.innerWidth > 768) {
+                let maxScroll = galleryScroll.scrollWidth - galleryScroll.clientWidth;
+                prevBtn.classList.toggle('disabled', galleryScroll.scrollLeft <= 1);
+                nextBtn.classList.toggle('disabled', Math.abs(galleryScroll.scrollLeft - maxScroll) <= 1);
+            } else {
+                prevBtn.classList.add('disabled');
+                nextBtn.classList.add('disabled');
+            }
+        };
+        galleryScroll.addEventListener('scroll', updateArrows);
+        window.addEventListener('resize', updateArrows);
+        updateArrows();
         prevBtn.onclick = () => { if (!prevBtn.classList.contains('disabled')) galleryScroll.scrollBy({ left: -300, behavior: 'smooth' }); };
         nextBtn.onclick = () => { if (!nextBtn.classList.contains('disabled')) galleryScroll.scrollBy({ left: 300, behavior: 'smooth' }); };
 
-        // Telegram канал (замените ссылку)
         const tgLink = document.getElementById('tgLink');
         tgLink.href = 'https://t.me/+xxxxxxxxxx';
         tgLink.target = '_blank';
 
-        // Модалка заявки
         const modal = document.getElementById('requestModal'), closeModalBtn = document.getElementById('closeModalBtn');
         const consentCheck = document.getElementById('consent'), submitModalBtn = document.getElementById('submitBtn');
         const openBtns = [document.getElementById('writeBtn'), document.getElementById('floatingOrderBtn')].filter(btn => btn);
